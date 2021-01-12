@@ -1,0 +1,122 @@
+{% extends "index.html.twig"%}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+     <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+ {% endblock %}
+{% block body %}
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('admin') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('user_list') }}">Utilisateurs</a></li>
+                        <li class="breadcrumb-item active">Rechercher</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Table des utilisateurs</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                    {#                                    <div class="input-group input-group-sm">#}
+                                    {#                                        <input class="form-control form-control-navbar " type="search" placeholder="Search" aria-label="Search">#}
+                                    {#                                        <button class="btn btn-navbar" type="submit">#}
+                                    {#                                            <i class="fas fa-search"></i>#}
+                                    {#                                        </button>#}
+                                    {#                                    </div>#}
+                                </div>
+                            </div>
+
+                            {% if users %}
+                            <div class="card-body table-responsive p-0">
+                                <table id="#example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Username</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for users in users %}
+                                        <tr>
+                                            <td>{{ users.id }}</td>
+                                            <td>{{ users.username }}</td>
+                                            <td>{{ users.nom }}</td>
+                                            <td>{{ users.prenom }}</td>
+                                            {% for item in users.roles %}
+                                                <td>{{item}}</td>
+                                            {% endfor %}
+                                            <td>
+                                                <a href="{{ path('user_by_id',{'id':users.id }) }}" class="btn btn-primary "> <i class="fas fa-eye"></i> Détails</a>
+                                                <a href="{{ path('user_edit',{'id':users.id }) }}" class="btn btn-warning"> <i class="fas fa-pencil-alt"></i> Modifier</a>
+                                                <a href="{{ path('user_delete',{'id':users.id }) }}" class="btn btn-danger event-delete" > <i class="fas fa-trash"></i> Supprimer</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <a href="{{ path("user_list") }}" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="page précédente">
+                                        <i class="fa fa-angle-double-left" aria-hidden="true"></i></button></a>
+                                {% else %}
+                                    <p>Aucun utilisateur n'a été trouvé</p>
+                                    <a href="{{ path("user_list") }}" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="page précédente">
+                                            <i class="fa fa-angle-double-left" aria-hidden="true"></i></button></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside class="control-sidebar control-sidebar-dark">
+    </aside>
+{% endblock %}
+{% block javascripts %}
+
+
+    <script>
+        document.getElementById('users').classList.add("active");
+    </script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+{% endblock %}

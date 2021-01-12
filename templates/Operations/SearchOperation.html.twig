@@ -1,0 +1,115 @@
+{% extends "index.html.twig"%}
+
+{% block title %}Liste des opérations{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+     <link rel="stylesheet" href="{{ asset('theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+ {% endblock %}
+{% block body %}
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('admin') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('operation_list') }}">Operations</a></li>
+                        <li class="breadcrumb-item active">Rechercher</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Table des opérations</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                </div>
+                            </div>
+
+                            {% if operations %}
+                            <div class="card-body table-responsive p-0">
+                            <table id="#example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Date création</th>
+                                    <th> Enseigne </th>
+                                    <th> Magasin </th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for operations in operations %}
+                                    <tr>
+                                        <td>{{ operations.id }}</td>
+                                        <td>{{ operations.dateCreation |date("Y/m/d") }}</td>
+                                        <td>{{ operations.station }}</td>
+                                        <td>{{ operations.panel }}</td>
+                                        <td>
+                                            <a href="{{ path('operation_by_id',{'id':operations.id }) }}" class="btn btn-primary "> <i class="fas fa-eye"></i> Détails</a>
+                                            <a href="{{ path('operation_delete',{'id':operations.id }) }}" class="btn btn-danger " onclick="return confirm('Voulez vous vraiment supprimer cette opération ?')" > <i class="fas fa-trash"></i> Supprimer</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                                <a href="{{ path("operation_list") }}" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="page précédente">
+                                        <i class="fa fa-angle-double-left" aria-hidden="true"></i></button></a>
+                                {% else %}
+                                    <p>Aucune opération n'a été trouvée</p>
+                                    <a href="{{ path("operation_list") }}" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="page précédente">
+                                            <i class="fa fa-angle-double-left" aria-hidden="true"></i></button></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside class="control-sidebar control-sidebar-dark">
+    </aside>
+{% endblock %}
+
+{% block javascripts %}
+   <script src="{{  asset('theme/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{  asset('theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{  asset('theme/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{  asset('theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{  asset('theme/dist/js/adminlte.min.js')}}"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+        <script>
+            document.getElementById('operations').classList.add("active");
+        </script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Détails Magasin {% endblock %}
+ {% block stylesheets %}{% endblock %}
+
+
+{% block body %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Détails Magasin</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('admin') }}">Home</a></li>
+                        <li class="breadcrumb-item "><a href="{{ path('panel_list') }}">Magasins</a> </li>
+                        <li class="breadcrumb-item active">Détails Magasin</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <strong> Id : </strong>
+                    {{ panel.id }}
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div> <p>
+                        <strong> Description : </strong>
+                        {{ panel.description }}
+                    </p>
+                </div> <br>
+                <div> <p>
+                        <strong> Enseigne : </strong>
+                        {{ panel.station }}
+                    </p>
+                </div> <br>
+                <div> <p>
+                        <strong> Gouvernorat : </strong>
+                        {{ panel.gouvernorat }}
+                    </p>
+                </div><br>
+                <div> <p>
+                        <strong> Adresse : </strong>
+                        {{ panel.adresse }}
+                    </p>
+                </div><br>
+                <div> <p>
+                        <strong> Longitude : </strong>
+                        {{ panel.longitude }}
+                    </p>
+                </div><br>
+                <div> <p>
+                        <strong> Latitude : </strong>
+                        {{ panel.latitude }}
+                    </p>
+                </div><br>
+                <div> <p>
+                        <strong> Généré par : </strong>
+                        {{ panel.user }}
+                    </p>
+                </div><br>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        document.getElementById('panels').classList.add("active");
+    </script>
+{% endblock %}

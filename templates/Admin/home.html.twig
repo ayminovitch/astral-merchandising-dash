@@ -1,0 +1,141 @@
+{% extends "index.html.twig"%}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="row">
+
+            <div class="col-lg-3 col-3 offset-0">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        {% for itemsUser in itemsUsers %}
+                            <h3>{{ itemsUser }}</h3>
+                        {% endfor %}
+                        <p>Utilisateurs</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <a href="{{ path('user_list') }}" class="small-box-footer">
+                        Plus de détails <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3 offset-md-0">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        {% for itemsStations in itemsStations %}
+                            <h3>{{ itemsStations }}</h3>
+                        {% endfor %}
+                        <p>Régions</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <a href="{{ path('station_list') }}" class="small-box-footer">
+                        Plus de détails <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3 offset-0">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        {% for itemsPanels in itemsPanels  %}
+                            <h3>{{ itemsPanels  }}</h3>
+                        {% endfor %}
+                        <p>Cadeaux</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <a href="{{ path('panel_list') }}" class="small-box-footer">
+                        Plus de détails <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3 offset-0">
+                <div class="small-box bg-gradient-danger">
+                    <div class="inner">
+                        {% for itemsOperation in itemsOperations %}
+                            <h3>{{ itemsOperation }}</h3>
+                        {% endfor %}
+                        <p>Historique</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <a href="{{ path('operation_list') }}" class="small-box-footer">
+                        Plus de détails <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="far fa-chart-bar"></i>
+                            Nombre d'opérations par Mois
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height:52vh">
+                        <div id="bar-chart" style="height: 300px;"></div>
+                        <canvas id="bar-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="far fa-chart-bar"></i>
+                            Nombre d'opérations par Gouvernorat
+                           </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height:52vh">
+                        <canvas id="donutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        document.getElementById('dashboard').classList.add("active");
+    </script>
+{% endblock %}

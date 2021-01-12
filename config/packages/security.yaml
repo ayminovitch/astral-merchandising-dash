@@ -1,0 +1,68 @@
+security:
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User: bcrypt
+    providers:
+    #         users_in_memory: { memory: null }
+        database:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+
+
+        login:
+            pattern:  /login_check
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+#        api:
+#            pattern: ^/api
+#            stateless: true
+#            anonymous: true
+#            json_login:
+#                check_path: /api/login_check
+#                success_handler: lexik_jwt_authentication.handler.authentication_success
+#                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+#            guard:
+#                authenticators:
+#                    - lexik_jwt_authentication.jwt_token_authenticator
+#            user_checker: App\Security\UserEnabledChecker
+        main:
+            remember_me:
+                secret: "%kernel.secret%"
+                lifetime: 604800
+            anonymous: ~
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+            user_checker: App\Security\UserEnabledChecker
+
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+
+
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin, roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN ]}
+#        - { path: ^/api,    roles: IS_AUTHENTICATED_FULLY }
+#        - { path: ^/profile,       roles: IS_AUTHENTICATED_FULLY }
+
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_MANAGER: ROLE_MANAGER
+        ROLE_AGENT : ROLE_AGENT
+
+
